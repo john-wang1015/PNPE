@@ -17,16 +17,14 @@ os.environ["KMP_DUPLICATE_LIB_OK"]="TRUE"
 class model:
     def __init__(self, dim, true_dataset, n, device='cpu'):
         self.nvars = dim
-        # NOTE: RYAN CHANGE PAIRS
         pairs_np = np.int_(true_dataset['pairs'] - np.ones(true_dataset['pairs'].shape))
         self.pairs = torch.from_numpy(pairs_np).to(torch.long).to(device) # changed from float32 to long
         self.n = n
         self.device = device
 
     def run_simulation(self, theta):
-        # theta = theta.to(self.device)
         if len(theta.shape) == 1:
-            theta = theta.unsqueeze(0)  # Reshape to 2D tensor
+            theta = theta.unsqueeze(0)  
         n_theta = theta.shape[0]
         summaries = torch.zeros([n_theta, self.nvars], device=self.device)
 
@@ -38,7 +36,6 @@ class model:
 
 
     def simulate_GVAR(self, theta):
-        # theta = theta.to(self.device)
         X = -0.1 * torch.eye(self.nvars - 1, device=self.device)
 
         for ii, pair in enumerate(self.pairs):

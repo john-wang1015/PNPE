@@ -143,7 +143,7 @@ class CustomPrior:
             
         return log_probs
 
-def psnpe():
+def run_psnpe():
     num_dim = 6
     low_para = -1 * torch.ones(num_dim)
     low = torch.cat([low_para, torch.zeros(1)],0)
